@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>MedSearch Home</title>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+        crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.5.0/firebase.js"></script>
+
+    <!--Additional Bootstrap style and scripts I've used before-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ"
+        crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Comfortaa|Noticia+Text" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css">
+</head>
+
+<body>
+    <header class="jumbotron">
+        <h1 style="color:blue">
+            <u>MedSearch</u>
+            <br>Helping Connect You to a Doctor You'll Love</h1>
+    </header>
+
+    <nav class="navbar navbar-expand-md navbar-light bg-light border-bottom p-0">
+        <div class="nav-moveRight">
+            <ul class="nav navbar-right nav-tabs mr-auto pt-1">
+                <li class="nav-item">
+                    <a class="nav-item nav-link" href="home.html">
+                        <span class="navbg">Home</span>
+                    </a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-item nav-link active" href="search.html">
+                        <span class="navbg">Search</span>
+                        <span class="sr-only">(current)</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-item nav-link" href="contact.html">
+                        <span class="navbg">Contact Us</span>
+                    </a>
+                </li>
+
+            </ul>
+
+        </div>
+    </nav>
+    <br>
+    <br>
+    <div class="container">
+
+        <div class="searchRow row">
+            <div class="col-md-6 col-sm-12">
+                <div class="card inputCard">
+                    <div class="card-header">
+                        Search for doctor
+                    </div>
+                    <div class="card-body">
+                        <form>
+                            <div class="form-group row">
+                                <label for="name">Doctor's Name (First or Last)</label>
+                                <input class="form-control" id="name" type="text">
+                            </div>
+                            <div class="form-group row">
+                                <label for="specialty">Specialty</label>
+                                <input class="form-control" id="specialty" type="text">
+                            </div>
+                            <div class="form-group row">
+                                <label for="city">City</label>
+                                <input class="form-control" id="city" type="text">
+                            </div>
+                            <div class="form-group row">
+                                <label for="state">State
+                                    <br>
+                                    <select class="form-control" id="state" size="1">
+                                        <option>AK</option>
+                                        <option>AL</option>
+                                        <option>AR</option>
+                                        <option>AZ</option>
+                                        <option>CA</option>
+                                        <option>CO</option>
+                                        <option>CT</option>
+                                        <option>DE</option>
+                                        <option>FL</option>
+                                        <option>GA</option>
+                                        <option>HI</option>
+                                        <option>IA</option>
+                                        <option>ID</option>
+                                        <option>IL</option>
+                                        <option>IN</option>
+                                        <option>KS</option>
+                                        <option>KY</option>
+                                        <option>LA</option>
+                                        <option>MA</option>
+                                        <option>MD</option>
+                                        <option>ME</option>
+                                        <option>MI</option>
+                                        <option>MN</option>
+                                        <option>MO</option>
+                                        <option>MS</option>
+                                        <option>MT</option>
+                                        <option>NC</option>
+                                        <option>ND</option>
+                                        <option>NE</option>
+                                        <option>NH</option>
+                                        <option>NJ</option>
+                                        <option>NM</option>
+                                        <option>NV</option>
+                                        <option>NY</option>
+                                        <option>OH</option>
+                                        <option>OK</option>
+                                        <option>OR</option>
+                                        <option>PA</option>
+                                        <option>RI</option>
+                                        <option>SC</option>
+                                        <option>SD</option>
+                                        <option>TN</option>
+                                        <option>TX</option>
+                                        <option>UT</option>
+                                        <option selected>VA</option>
+                                        <option>VT</option>
+                                        <option>WA</option>
+                                        <option>WI</option>
+                                        <option>WV</option>
+                                        <option>WY</option>
+                                    </select>
+                                </label>
+                            </div>
+                            <button class="btn btn-primary" id="submit" type="submit">Submit</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="doctorInfo col-md-6 col-sm-12">
+
+            </div>
+        </div>
+
+
+    </div>
+
+    <footer class="bottom">
+        <div class="icons">
+            <i class="fab fa-facebook"></i>
+            <i class="fab fa-twitter"></i>
+            <br>
+        </div>
+    </footer>
+
+
+    <br>
+    <br>
+    <br>
+    <br>
+
+
+
+</body>
+
+</html>
