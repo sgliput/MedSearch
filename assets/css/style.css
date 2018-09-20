@@ -116,6 +116,10 @@ input{
     margin: 0 5%;
 }
 
+.hideTillSearch{
+    display: hidden;
+}
+
 
 
 @media(max-width: 795px){
