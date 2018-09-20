@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
         crossorigin="anonymous">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/5.5.0/firebase.js"></script>
+    <!-- <script src="https://www.gstatic.com/firebasejs/5.5.0/firebase.js"></script>-->
 
     <!--Additional Bootstrap style and scripts I've used before-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -72,8 +72,8 @@
                     <div class="card-body">
                         <form>
                             <div class="form-group row">
-                                <label for="name">Doctor's Name (First or Last)</label>
-                                <input class="form-control" id="name" type="text">
+                                <label for="doctor">Doctor's Name (First or Last)</label>
+                                <input class="form-control" id="doctor" type="text">
                             </div>
                             <div class="form-group row">
                                 <label for="specialty">Specialty</label>
@@ -145,7 +145,12 @@
                     </div>
                 </div>
             </div>
-            <div class="doctorInfo col-md-6 col-sm-12">
+            <div class="col-md-6 col-sm-12">
+                <h3 class="hideTillSearch">Your Potential Doctors:</h3>
+                <br>
+                <div id="doctorInfo">
+
+                </div>
 
             </div>
         </div>
@@ -172,3 +177,47 @@
 </body>
 
 </html>
+
+<script>
+
+    $("#submit").on("click", function (e) {
+        e.preventDefault();
+        $(".hideTillSearch").show();
+        var name = $("#doctor").val().trim();
+        var specialty = $("#specialty").val().trim();
+
+        var queryURL = "https://api.betterdoctor.com/2016-03-01/doctors?name=" + name + "&limit=10&user_key=6894a66bcefd4390f03f3273fe0ba2e3"
+
+        $.ajax({
+            url: queryURL,
+            method: "GET"
+        }).then(function (response) {
+            var doctors = response.data;
+            console.log(doctors);
+            //displays in console only doctors with "internal medicine" mentioned in their bio and displays related image
+            for (var i = 0; i < response.data.length; i++) {
+                var newRow = $("<div class='row'>");
+                var doctorName = $("<p>" + doctors[i].profile.first_name + " " + doctors[i].profile.last_name + "</p>" + "<br>");
+                var doctorSpecialties = $("<p>Specialties: </p>");
+                for (var j = 0; j < doctors[i].specialties.length; j++) {
+                    if(j === doctors[i].specialties.length - 1){
+                   doctorSpecialties.append(doctors[i].specialties[j].name);
+                    } else{
+                        doctorSpecialties.append(doctors[i].specialties[j].name + ", ");
+                    }
+                }
+                doctorName.append(doctorSpecialties);
+                newRow.append(doctorName);
+                
+
+                $("#doctorInfo").append(newRow);
+                //if(response.data[i].profile.bio.search("internal medicine") !== -1){
+                console.log(response.data[i]);
+                //var source = response.data[i].profile.image_url;
+                //$("img").attr("src", source);
+            }
+        })
+    });
+    
+
+</script>
