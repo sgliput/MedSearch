@@ -121,6 +121,11 @@ input{
     display: hidden;
 }
 
+.listing{
+    border-bottom: 2px solid blue;
+    margin: 0 5%;
+}
+
 
 
 @media(max-width: 795px){

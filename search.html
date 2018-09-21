@@ -77,7 +77,13 @@
                             </div>
                             <div class="form-group row">
                                 <label for="specialty">Specialty</label>
-                                <input class="form-control" id="specialty" type="text">
+                                <input class="form-control" id="specialty" list="specialtyList" type="text">
+                                <datalist id = "specialtyList">
+                                    <option value="Obstetrician"></option>
+                                    <option value="Obstetrics-Gynecologist"></option>
+                                    <option value="Legal-Medicine"></option>
+
+                                </datalist>
                             </div>
                             <div class="form-group row">
                                 <label for="city">City</label>
@@ -183,10 +189,11 @@
     $("#submit").on("click", function (e) {
         e.preventDefault();
         $(".hideTillSearch").show();
+        $("#doctorInfo").empty();
         var name = $("#doctor").val().trim();
-        var specialty = $("#specialty").val().trim();
+        var specialty = $("#specialty").val().trim().toLowerCase();
 
-        var queryURL = "https://api.betterdoctor.com/2016-03-01/doctors?name=" + name + "&limit=10&user_key=6894a66bcefd4390f03f3273fe0ba2e3"
+        var queryURL = "https://api.betterdoctor.com/2016-03-01/doctors?name=" + name + "&specialty_uid=" + specialty + "&limit=20&user_key=6894a66bcefd4390f03f3273fe0ba2e3";
 
         $.ajax({
             url: queryURL,
@@ -196,8 +203,8 @@
             console.log(doctors);
             //displays in console only doctors with "internal medicine" mentioned in their bio and displays related image
             for (var i = 0; i < response.data.length; i++) {
-                var newRow = $("<div class='row'>");
-                var doctorName = $("<p>" + doctors[i].profile.first_name + " " + doctors[i].profile.last_name + "</p>" + "<br>");
+                var newRow = $("<div class='row listing'></div><br>");
+                var doctorName = $("<p>" + doctors[i].profile.first_name + " " + doctors[i].profile.last_name + "</p>");
                 var doctorSpecialties = $("<p>Specialties: </p>");
                 for (var j = 0; j < doctors[i].specialties.length; j++) {
                     if(j === doctors[i].specialties.length - 1){
