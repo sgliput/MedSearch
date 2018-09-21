@@ -82,6 +82,7 @@
                                     <option value="Obstetrician"></option>
                                     <option value="Obstetrics-Gynecologist"></option>
                                     <option value="Legal-Medicine"></option>
+                                    <option value="Dentist"></option>
 
                                 </datalist>
                             </div>
@@ -240,6 +241,9 @@
                     //var source = response.data[i].profile.image_url;
                     //$("img").attr("src", source);
                 }
+            }
+            if ($('#doctorInfo').is(':empty')){
+                $("#doctorInfo").html("<h4 class='sorry'>Sorry, there are no doctors in that state that fit your criteria.</h4>");
             }
         });
     });
