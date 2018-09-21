@@ -17,13 +17,14 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.5.0/firebase.js"></script>
 
-<!--Additional Bootstrap style and scripts I've used before-->
+    <!--Additional Bootstrap style and scripts I've used before-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
-  <link href="https://fonts.googleapis.com/css?family=Comfortaa|Noticia+Text" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ"
+        crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Comfortaa|Noticia+Text" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
 </head>
 
@@ -46,11 +47,11 @@
                     </a>
                 </li>
                 <li class="nav-item active">
-                        <a class="nav-item nav-link active" href="contact.html">
-                            <span class="navbg">Contact Us</span>
-                            <span class="sr-only">(current)</span>
-                        </a>
-                    </li>
+                    <a class="nav-item nav-link active" href="contact.html">
+                        <span class="navbg">Contact Us</span>
+                        <span class="sr-only">(current)</span>
+                    </a>
+                </li>
 
             </ul>
 
@@ -58,24 +59,50 @@
     </nav>
 
     <div class="container">
+        <br>
+        <div class="searchRow row">
+            <div class="col-md-8 col-sm-12">
+                <div class="card inputCard">
+                    <div class="card-header">
+                        Contact Us
+                    </div>
+                    <div class="card-body">
+                        <form>
+                            <div class="form-group row">
+                                <label for="doctor">Your Name</label>
+                                <input class="form-control" id="contact-name" type="text">
+                            </div>
+                            <div class="form-group row">
+                                <label for="doctor">Your Email Address</label>
+                                <input class="form-control" id="contact-email" type="email">
+                            </div>
+                            <div class="form-group row">
+                                <label for="doctor">Question / Comment</label>
+                                <textarea class="form-control" id="contact-comment" rows="8"></textarea>
+                            </div>
+                            <center><button class="btn btn-primary" id="submit" type="submit">Submit</button></center>
+                        </form>
+                    </div>
+                </div>
+            </div>
 
-
+        </div>
 
     </div>
 
     <footer class="bottom">
-            <div class="icons">
+        <div class="icons">
             <i class="fab fa-facebook"></i>
             <i class="fab fa-twitter"></i>
             <br>
-            </div>
-        </footer>
-    
-    
+        </div>
+    </footer>
+
+
     <br><br><br><br>
-    
-    
-    
-    </body>
-    
-    </html>
+
+
+
+</body>
+
+</html>
