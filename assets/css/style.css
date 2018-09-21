@@ -126,6 +126,14 @@ input{
     margin: 0 5%;
 }
 
+.docName{
+    width: 100%;
+}
+
+.phoneNumber{
+    float: right;
+}
+
 
 
 @media(max-width: 795px){
