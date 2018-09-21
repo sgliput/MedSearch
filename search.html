@@ -78,7 +78,7 @@
                             <div class="form-group row">
                                 <label for="specialty">Specialty</label>
                                 <input class="form-control" id="specialty" list="specialtyList" type="text">
-                                <datalist id = "specialtyList">
+                                <datalist id="specialtyList">
                                     <option value="Obstetrician"></option>
                                     <option value="Obstetrics-Gynecologist"></option>
                                     <option value="Legal-Medicine"></option>
@@ -192,6 +192,7 @@
         $("#doctorInfo").empty();
         var name = $("#doctor").val().trim();
         var specialty = $("#specialty").val().trim().toLowerCase();
+        var state = $("#state").val().trim();
 
         var queryURL = "https://api.betterdoctor.com/2016-03-01/doctors?name=" + name + "&specialty_uid=" + specialty + "&limit=20&user_key=6894a66bcefd4390f03f3273fe0ba2e3";
 
@@ -202,29 +203,46 @@
             var doctors = response.data;
             console.log(doctors);
             //displays in console only doctors with "internal medicine" mentioned in their bio and displays related image
-            for (var i = 0; i < response.data.length; i++) {
-                var newRow = $("<div class='row listing'></div><br>");
-                var doctorName = $("<p>" + doctors[i].profile.first_name + " " + doctors[i].profile.last_name + "</p>");
-                var doctorSpecialties = $("<p>Specialties: </p>");
-                for (var j = 0; j < doctors[i].specialties.length; j++) {
-                    if(j === doctors[i].specialties.length - 1){
-                   doctorSpecialties.append(doctors[i].specialties[j].name);
-                    } else{
-                        doctorSpecialties.append(doctors[i].specialties[j].name + ", ");
-                    }
-                }
-                doctorName.append(doctorSpecialties);
-                newRow.append(doctorName);
-                
 
-                $("#doctorInfo").append(newRow);
-                //if(response.data[i].profile.bio.search("internal medicine") !== -1){
-                console.log(response.data[i]);
-                //var source = response.data[i].profile.image_url;
-                //$("img").attr("src", source);
+            var foundDoctor = false;
+            for (var i in doctors) {
+                for (var h in doctors[i].licenses) {
+                    
+                    if (doctors[i].licenses[h].state == state) {
+                        foundDoctor = true;
+                        if($(".sorry")){
+                            $(".sorry").remove();
+                        }
+
+                        console.log(doctors[i]);
+
+                        var newRow = $("<div class='row listing'></div><br>");
+                        var doctorName = $("<p>" + doctors[i].profile.first_name + " " + doctors[i].profile.last_name + "</p>");
+                        var doctorSpecialties = $("<p>Specialties: </p>");
+                        for (var j = 0; j < doctors[i].specialties.length; j++) {
+                            if (j === doctors[i].specialties.length - 1) {
+                                doctorSpecialties.append(doctors[i].specialties[j].name);
+                            } else {
+                                doctorSpecialties.append(doctors[i].specialties[j].name + ", ");
+                            }
+                        }
+                        doctorName.append(doctorSpecialties);
+                        newRow.append(doctorName);
+
+
+                        $("#doctorInfo").append(newRow);
+                    } else if (!foundDoctor){
+                        $("#doctorInfo").html("<h4 class='sorry'>Sorry, there are no doctors in that state that fit your criteria.</h4>");
+                        
+                    }
+                    //if(response.data[i].profile.bio.search("internal medicine") !== -1){
+                    console.log(response.data[i]);
+                    //var source = response.data[i].profile.image_url;
+                    //$("img").attr("src", source);
+                }
             }
-        })
+        });
     });
-    
+
 
 </script>
