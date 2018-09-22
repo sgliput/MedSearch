@@ -112,18 +112,37 @@ label, input, select{
     width: 100%;
 }
 
-input{
+input, #gender{
     width: 80%;
     margin: 0 5%;
 }
 
-.hideTillSearch{
-    display: hidden;
+#map{
+    display: none;
 }
 
 .listing{
     border-bottom: 2px solid blue;
     margin: 0 5%;
+}
+
+.docName{
+    width: 100%;
+}
+
+.phoneNumber{
+    float: right;
+}
+
+.mapLink{
+    font-size: 1.4rem;
+    color: blue;
+    cursor: pointer;
+}
+
+.fa-times{
+    float: right;
+    cursor: pointer;
 }
 
 
