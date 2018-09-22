@@ -145,6 +145,25 @@ input, #gender{
     cursor: pointer;
 }
 
+.ui-autocomplete{
+    background-color: #a1bbd1;
+    color: white;
+    cursor: default;
+    width: 30%;
+    border-radius: 0px 0px 20px 20px;
+}
+
+.ui-menu-item-wrapper{
+    border-top: 1px solid grey;
+}
+
+ul li:first-child div{
+    border-top: none;
+}
+
+.ui-menu-item-wrapper:hover{
+    font-style: italic;
+}
 
 
 @media(max-width: 795px){
