@@ -28,6 +28,8 @@ $("#submit").on("click", function (event) {
         $("#name-label").html("Your Name (*field required)");
     } else {
         validName = true;
+        $("#name-label").css("color", "#000000");
+        $("#name-label").html("Your Name");
     }
 
     if (contactComment == 0) {
@@ -36,6 +38,8 @@ $("#submit").on("click", function (event) {
         $("#comment-label").html("Question / Comment (*field required)");
     } else {
         validComment = true;
+        $("#comment-label").css("color", "#000000");
+        $("#comment-label").html("Question / Comment");
     }
 
     if (!checkEmail(contactEmail)) {
@@ -44,25 +48,23 @@ $("#submit").on("click", function (event) {
         $("#email-label").html("Your E-mail Address (*invalid e-mail)");
     } else {
         validEmail = true;
+        $("#email-label").css("color", "#000000");
+        $("#email-label").html("Your E-mail Address");
     }
 
 
-    if(validName && validEmail && validComment){
-    console.log(contactName);
-    console.log(contactEmail);
-    console.log(contactComment);
+    if (validName && validEmail && validComment) {
+        console.log(contactName);
+        console.log(contactEmail);
+        console.log(contactComment);
 
 
-    dataRef.ref().push({
-        name: contactName,
-        email: contactEmail,
-        comment: contactComment
-    });
-}
-
-
-
-
+        dataRef.ref().push({
+            name: contactName,
+            email: contactEmail,
+            comment: contactComment
+        });
+    }
 
 });
 
