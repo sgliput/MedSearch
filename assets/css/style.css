@@ -117,8 +117,8 @@ input{
     margin: 0 5%;
 }
 
-.hideTillSearch{
-    display: hidden;
+#map{
+    display: none;
 }
 
 .listing{
@@ -132,6 +132,17 @@ input{
 
 .phoneNumber{
     float: right;
+}
+
+.mapLink{
+    font-size: 1.4rem;
+    color: blue;
+    cursor: pointer;
+}
+
+.fa-times{
+    float: right;
+    cursor: pointer;
 }
 
 

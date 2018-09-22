@@ -153,12 +153,25 @@
                 </div>
             </div>
             <div class="col-md-6 col-sm-12">
-                <h3 class="hideTillSearch">Your Potential Doctors:</h3>
+                    
+                <div id = "doctorHalf">
+                <h3>Your Potential Doctors:</h3>
                 <br>
                 <div id="doctorInfo">
 
                 </div>
+                </div>
 
+                <div id="map">
+                        <i class="fas fa-times"></i>
+                    <h3>
+                        <span id="chosenDoctor"></span>'s Location</h3>
+                    <br>
+                    <div id="locationMap">
+
+                    </div>
+                </div>
+                
             </div>
         </div>
 
@@ -209,10 +222,12 @@
             var foundDoctor = false;
             for (var i in doctors) {
                 for (var h in doctors[i].licenses) {
+
                     
+
                     if (doctors[i].licenses[h].state == state) {
                         foundDoctor = true;
-                        if($(".sorry")){
+                        if ($(".sorry")) {
                             $(".sorry").remove();
                         }
 
@@ -228,28 +243,40 @@
                                 doctorSpecialties.append(doctors[i].specialties[j].name + ", ");
                             }
                         }
-                        if(doctors[i].practices.length !== 0) {
-                            if(doctors[i].practices[0].phones[0].type == "fax"){
+                        if (doctors[i].practices.length !== 0) {
+                            if (doctors[i].practices[0].phones[0].type == "fax") {
                                 var possPhone = doctors[i].practices[0].phones[1].number;
                                 possPhone = possPhone.replace(/(\w{3})(\w{3})(\w{4})/, '($1) $2-$3');
                                 var phone = $("<span class='phoneNumber'>Phone #: " + possPhone + "</span>");
 
-                            } else{
+                            } else {
                                 var possPhone = doctors[i].practices[0].phones[0].number;
                                 possPhone = possPhone.replace(/(\w{3})(\w{3})(\w{4})/, '($1) $2-$3');
-                        var phone = $("<span class='phoneNumber'>Phone #: " + possPhone + "</span>");
+                                var phone = $("<span class='phoneNumber'>Phone #: " + possPhone + "</span>");
                             }
-                        };
+                        
+                        var practices= doctors[i].practices;
+                        var latitude = practices[practices.length - 1].lat;
+                        var longitude = practices[practices.length - 1].lon;
+                        var locationName = practices[practices.length - 1].name;
+                        console.log(locationName + " is at latitude: " + latitude + ", longitude: " + longitude);                        
+                        var mapLink = $("<a class='mapLink' data-name='" + doctors[i].profile.first_name + " " + doctors[i].profile.last_name + "'>Click here for map</a><br>");
+
+                         newRow.append(mapLink);
+                    };
+
                         doctorName.append(phone);
                         doctorName.append(doctorSpecialties);
-                        
-                        newRow.append(doctorName);
+
+
+                        newRow.prepend(doctorName);
+                       
 
 
                         $("#doctorInfo").append(newRow);
-                    } else if (!foundDoctor){
+                    } else if (!foundDoctor) {
                         $("#doctorInfo").html("<h4 class='sorry'>Sorry, there are no doctors in that state that fit your criteria.</h4>");
-                        
+
                     }
                     //if(response.data[i].profile.bio.search("internal medicine") !== -1){
                     console.log(response.data[i]);
@@ -257,11 +284,24 @@
                     //$("img").attr("src", source);
                 }
             }
-            if ($('#doctorInfo').is(':empty')){
+            if ($('#doctorInfo').is(':empty')) {
                 $("#doctorInfo").html("<h4 class='sorry'>Sorry, there are no doctors in that state that fit your criteria.</h4>");
             }
         });
     });
+
+    $(document.body).on("click", ".mapLink", function(){
+        $("#doctorHalf").hide();
+        $("#map").show();
+        var doctorName = $(this).attr("data-name");
+        console.log(doctorName);
+        $("#chosenDoctor").text(doctorName);
+    });
+
+    $(document.body).on("click", ".fa-times", function(){
+        $("#map").hide();
+        $("#doctorHalf").show();
+    })
 
 
 </script>
