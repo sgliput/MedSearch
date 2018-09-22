@@ -112,7 +112,7 @@ label, input, select{
     width: 100%;
 }
 
-input{
+input, #gender{
     width: 80%;
     margin: 0 5%;
 }
