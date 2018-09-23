@@ -1,31 +1,41 @@
-            // THE EVENT LISTENER ASSOCIATED WITH THIS FUNCTION MUST BE DECLARED "PASSIVE" to avoid problems with the scrollbar.
+function renderMap(myLat, myLng) {
 
-            // Apparently Google's code calls initMap(), but they didn't declared in their code. We need to have it in our code else it fails with an error message, "initMap() is not declared as a function."
+     // initialize communication with the platform
+     var platform = new H.service.Platform({
+          app_id: 'devportal-demo-20180625',
+          app_code: '9v2BkviRwi9Ot26kp2IysQ',
+          useHTTPS: true
+     });
+     var pixelRatio = window.devicePixelRatio || 1;
+     var defaultLayers = platform.createDefaultLayers({
+          tileSize: pixelRatio === 1 ? 256 : 512,
+          ppi: pixelRatio === 1 ? undefined : 320
+     });
 
-            var map;
-            var latitude = 37.649054; // FOR TESTING ONLY
-            var longitude = -77.615751; // FOR TESTING ONLY
+     // initialize a map - this map is centered over Europe
+     var map = new H.Map(document.getElementById('map'),
+          defaultLayers.normal.map, {
+               center: {
+                    lat: myLat,
+                    lng: myLng
+               },
+               zoom: 15,
+               pixelRatio: pixelRatio
+          });
 
-            function initMap(latitude, longitude) {
+     // make the map interactive
+     var behavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(map));
 
-                var myLatLng = {
-                    lat: 37.649054,
-                    lng: -77.615751
-                };
+     // Create the default UI components
+     var ui = H.ui.UI.createDefault(map, defaultLayers);
 
-                var map = new google.maps.Map(document.getElementById('mapDiv'), {
-                    zoom: 15,
-                    center: myLatLng
-                });
+     // Now use the map as required...
+     var locationMarker = new H.map.Marker({
+          lat: myLat,
+          lng: myLng
+     });
+     map.addObject(locationMarker);
+}
 
-                var marker = new google.maps.Marker({
-                    position: myLatLng,
-                    map: map,
-                    title: 'Hello World!'
-                });
-
-                marker.setMap(map);
-            }
-
-            // THIS CALL IS FOR TESTING ONLY
-            initMap(latitude, longitude);
+//  ----- this call is just for testing ----
+renderMap(37.649054, -77.615751);
