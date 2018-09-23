@@ -1,33 +1,19 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <style>
-      #map {
-        height: 400px; 
-        width: 400%;  
-       }
-    </style>
-  </head>
+<head>
+<meta name="viewport" content="initial-scale=1.0, width=device-width" />
+<link rel="stylesheet" type="text/css" href="https://js.api.here.com/v3/3.0/mapsjs-ui.css?dp-version=1533195059" />
+<script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-core.js"></script>
+<script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-service.js"></script>
+<script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-ui.js"></script>
+<script type="text/javascript" src="https://js.api.here.com/v3/3.0/mapsjs-mapevents.js"></script>
 
-  <body>
-    <h3>My Google Maps Demo</h3>
+</head>
+<body>
 
-    <div id="map"></div>
-    <script>
-
-function initMap() {
+  <div id="map" style="width: 400px; height: 400px; background: grey"></div>
   
-  var uluru = {lat: 37.649054, lng: -77.615751};
-
-  var map = new google.maps.Map(
-      document.getElementById('map'), {zoom: 15, center: uluru});
-
-  var marker = new google.maps.Marker({position: uluru, map: map});
-}
-    </script>
-
-    <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAz46Fkss9hqrwSriLqetL1JIxThdV0vA0&callback=initMap">
-    </script>
-  </body>
+  <script  src="assets/javascript/map.js" type="text/javascript" charset="UTF-8"></script>
+    
+</body>
 </html>
