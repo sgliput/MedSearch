@@ -8,6 +8,7 @@ $.ajax({
     method: "GET"
 }).then(function (response) {
     var specialties = response.data;
+
     var nameArray = [];
 
     //adds UID and name of each specialty in returned data to specialtiesArray
@@ -22,12 +23,13 @@ $.ajax({
 
     //sorts objects in specialtiesArray alphabetically by the name value
     specialtiesArray.sort(function (a, b) {
-        var nameA = a.name.toLowerCase(), nameB = b.name.toLowerCase()
+        var nameA = a.name.toLowerCase(),
+            nameB = b.name.toLowerCase()
         if (nameA < nameB) //sort string ascending
-            return -1
+            return -1;
         if (nameA > nameB)
-            return 1
-        return 0 //default return value (no sorting)
+            return 1;
+        return 0; //default return value (no sorting)
     })
 
     console.log(specialtiesArray);
@@ -69,6 +71,7 @@ $("#submit").on("click", function (event) {
     var state = $("#state").val().trim();
     var gender = $("#gender").val().trim().toLowerCase();
     var number = $("#numberofRecords").val().trim();
+
 
     //loops through specialtiesArray
     for (var i in specialtiesArray) {
@@ -133,7 +136,10 @@ $("#submit").on("click", function (event) {
                     //creates row for displaying data on found doctor
                     var newRow = $("<div class='row listing'></div><br>");
 
+
+
                     //if the name input value is in the doctor's middle name, that middle name is displayed; otherwise it is not
+
                     if (doctors[i].profile.middle_name === name) {
                         var doctorName = $("<p class='docName'>" + doctors[i].profile.first_name + " " + doctors[i].profile.middle_name + " " + doctors[i].profile.last_name + "</p>");
                     } else {
@@ -208,8 +214,10 @@ $("#submit").on("click", function (event) {
                         var cityAndState = practices[practices.length - 1].visit_address.city + ", " + practices[practices.length - 1].visit_address.state;
                         var practiceAndCity = $(`<p><b>Practice:</b> ${locationName} in ${cityAndState}</p>`);
 
-                        //creates clickable link for toggling to map
-                        var mapLink = $("<a class='mapLink' data-name='" + doctors[i].profile.first_name + " " + doctors[i].profile.last_name + "'>Click here for map</a><br>");
+                        // creates clickable map link for toggling to map
+                        console.log("location: " + locationName + " is at latitude: " + latitude + ", longitude: " + longitude);
+                        var mapLink = $("<a class='mapLink' data-latitude='" + latitude + "' data-longitude='" + longitude + "' data-name='" + doctors[i].profile.first_name + " " + doctors[i].profile.last_name + "' > Click here for map</a > <br>");
+
 
                         newRow.append(mapLink);
 
@@ -260,17 +268,16 @@ $(document.body).on("click", ".mapLink", function () {
     $("#map").show();
     //stores the doctor's name and displays it above map
     var doctorName = $(this).attr("data-name");
+    var latitude = $(this).attr("data-latitude");
+    var longitude = $(this).attr("data-longitude");
     console.log(doctorName);
     $("#chosenDoctor").text(doctorName);
+    console.log("latitude: " + latitude + ", longitude: " + longitude);
+    renderMap(latitude, longitude);
 });
 
-//when X is clicked on above map, it toggles back to doctor results
+//when X is clicked above map, it toggles back to doctor results
 $(document.body).on("click", ".fa-times", function () {
     $("#map").hide();
     $("#doctorHalf").show();
 })
-
-
-
-
-
