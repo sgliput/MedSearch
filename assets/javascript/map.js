@@ -13,7 +13,7 @@ function renderMap(latitude, longitude) {
      });
 
      // initialize a map
-     var map = new H.Map(document.getElementById('localMap'),
+     var map = new H.Map(document.getElementById('locationMap'),
           defaultLayers.normal.map, {
                center: {
                     lat: latitude,

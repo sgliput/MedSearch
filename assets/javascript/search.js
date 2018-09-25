@@ -266,6 +266,7 @@ $(document.body).on("click", ".mapLink", function () {
     //toggles right half of screen from doctor results to map
     $("#doctorHalf").hide();
     $("#map").show();
+    $("#locationMap").empty();
     //stores the doctor's name and displays it above map
     var doctorName = $(this).attr("data-name");
     var latitude = $(this).attr("data-latitude");
