@@ -119,6 +119,8 @@ $("#submit").on("click", function (event) {
             //loops through array of doctor licenses
             for (var h in doctors[i].licenses) {
 
+
+
                 //if the doctor has a license that matches the value in the state input field
                 if (doctors[i].licenses[h].state == state) {
                     foundDoctor = true;
@@ -139,12 +141,44 @@ $("#submit").on("click", function (event) {
                     }
 
                     //creates paragraph for displaying the found doctor's specialties, which are separated by a comma, except for the last one listed
-                    var doctorSpecialties = $("<p>Specialties: </p>");
+                    var doctorSpecialties = $("<p><b>Specialties:</b> </p>");
                     for (var j = 0; j < doctors[i].specialties.length; j++) {
                         if (j === doctors[i].specialties.length - 1) {
                             doctorSpecialties.append(doctors[i].specialties[j].name);
                         } else {
                             doctorSpecialties.append(doctors[i].specialties[j].name + ", ");
+                        }
+                    }
+
+                    //creates paragraph for listing the states the doctor is licensed in
+                    var licenses = $("<p><b>Licensed in:</b> </p>");
+                    for (var m = 0; m < doctors[i].licenses.length; m++) {
+                        if (m === doctors[i].licenses.length - 1) {
+                            licenses.append(doctors[i].licenses[m].state);
+                        } else {
+                            licenses.append(doctors[i].licenses[m].state + ", ");
+                        }
+                    }
+
+                    //array for collecting insurances accepted by doctor
+                    var insuranceArray = [];
+                    //if there are insurances listed, this creates a paragraph for listing them
+                    if (doctors[i].insurances.length !== 0) {
+                        var insurance = $("<p><b>Insurances accepted:</b> </p>");
+                        //pushes insurance names into insuranceArray and ensures that there are no repeated values
+                        for (var k = 0; k < doctors[i].insurances.length; k++) {
+                            if ($.inArray(doctors[i].insurances[k].insurance_provider.name, insuranceArray) === -1) {
+                                insuranceArray.push(doctors[i].insurances[k].insurance_provider.name);
+                            }
+                        }
+
+                        //loops through insuranceArray and adds comma-separated list of insurances to insurance paragraph
+                        for (var l = 0; l < insuranceArray.length; l++) {
+                            if (l === insuranceArray.length - 1) {
+                                insurance.append(insuranceArray[l]);
+                            } else {
+                                insurance.append(insuranceArray[l] + ", ");
+                            }
                         }
                     }
 
@@ -154,19 +188,25 @@ $("#submit").on("click", function (event) {
                         if (doctors[i].practices[0].phones[0].type == "fax") {
                             var possPhone = doctors[i].practices[0].phones[1].number;
                             possPhone = possPhone.replace(/(\w{3})(\w{3})(\w{4})/, '($1) $2-$3');
-                            var phone = $("<span class='phoneNumber'>Phone #: " + possPhone + "</span>");
+                            var phone = $("<span class='phoneNumber'><b>Phone #:</b> " + possPhone + "</span>");
 
                         } else {
                             var possPhone = doctors[i].practices[0].phones[0].number;
                             possPhone = possPhone.replace(/(\w{3})(\w{3})(\w{4})/, '($1) $2-$3');
-                            var phone = $("<span class='phoneNumber'>Phone #: " + possPhone + "</span>");
+                            var phone = $("<span class='phoneNumber'><b>Phone #:</b> " + possPhone + "</span>");
                         }
 
                         //variables for the latitude, longitude, and name of the last practice listed in the practices array
                         var practices = doctors[i].practices;
+
                         var latitude = practices[practices.length - 1].lat;
                         var longitude = practices[practices.length - 1].lon;
                         var locationName = practices[practices.length - 1].name;
+                        console.log(locationName + " is at latitude: " + latitude + ", longitude: " + longitude);
+
+                        //variable and string literal for displaying name, city, and state of doctor's practice
+                        var cityAndState = practices[practices.length - 1].visit_address.city + ", " + practices[practices.length - 1].visit_address.state;
+                        var practiceAndCity = $(`<p><b>Practice:</b> ${locationName} in ${cityAndState}</p>`);
 
                         //creates clickable link for toggling to map
                         var mapLink = $("<a class='mapLink' data-name='" + doctors[i].profile.first_name + " " + doctors[i].profile.last_name + "'>Click here for map</a><br>");
@@ -177,6 +217,9 @@ $("#submit").on("click", function (event) {
                     //adds phone, specialties, and name to doctor row, and adds row to doctorInfo area
                     doctorName.append(phone);
                     doctorName.append(doctorSpecialties);
+                    doctorName.append(practiceAndCity);
+                    doctorName.append(licenses);
+                    doctorName.append(insurance);
 
                     newRow.prepend(doctorName);
 
