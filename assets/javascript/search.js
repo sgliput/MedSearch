@@ -212,7 +212,11 @@ $("#submit").on("click", function (event) {
                         var mapLink = $("<a class='mapLink' data-name='" + doctors[i].profile.first_name + " " + doctors[i].profile.last_name + "'>Click here for map</a><br>");
 
                         newRow.append(mapLink);
+
+                        
                     };
+
+                    
 
                     //adds phone, specialties, and name to doctor row, and adds row to doctorInfo area
                     doctorName.append(phone);
@@ -220,6 +224,12 @@ $("#submit").on("click", function (event) {
                     doctorName.append(practiceAndCity);
                     doctorName.append(licenses);
                     doctorName.append(insurance);
+
+                    //if no map and phone number are returned (identifying information), then a link for a Google search is inserted, which will open in another window
+                    if(!mapLink && !phone){
+                        var searchLink = $("<p>Not much info? <a href='https://www.google.com/search?q=dr.+" + doctors[i].profile.first_name + "+" + doctors[i].profile.last_name + "&oq=dr.+" + doctors[i].profile.first_name + "+" + doctors[i].profile.last_name + "' target='blank'>Click here to search Google.</a>");
+                        doctorName.append(searchLink);
+                    }
 
                     newRow.prepend(doctorName);
 
