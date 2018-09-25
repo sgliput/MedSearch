@@ -104,7 +104,7 @@ $("#submit").on("click", function (event) {
         }
     }
 
-    //AJAZ call for main search
+    //AJAX call for main search
     $.ajax({
         url: queryURL,
         method: "GET"
