@@ -6,7 +6,7 @@ $.ajax({
     method: "GET"
 }).then(function (response) {
     var specialties = response.data;
-    
+
     var nameArray = [];
     for (var i in specialties) {
         specialtiesArray.push({
@@ -18,12 +18,13 @@ $.ajax({
     };
 
     specialtiesArray.sort(function (a, b) {
-        var nameA = a.name.toLowerCase(), nameB = b.name.toLowerCase()
+        var nameA = a.name.toLowerCase(),
+            nameB = b.name.toLowerCase()
         if (nameA < nameB) //sort string ascending
-            return -1
+            return -1;
         if (nameA > nameB)
-            return 1
-        return 0 //default return value (no sorting)
+            return 1;
+        return 0; //default return value (no sorting)
     })
 
     console.log(specialtiesArray);
@@ -42,7 +43,7 @@ $.ajax({
         $("#specialty").autocomplete({
             source: specialtiesName,
             minLength: 3,
-           
+
         });
     });
 });
@@ -59,14 +60,14 @@ $("#submit").on("click", function (event) {
     var gender = $("#gender").val().trim().toLowerCase();
     var number = $("#numberofRecords").val().trim();
 
-for(var i in specialtiesArray){
-    if(specialty !== specialtiesArray[i].name){
-        $("#doctorInfo").html("<h4 class='sorry'>Choose a proper specialty.</h4>");
+    for (var i in specialtiesArray) {
+        if (specialty !== specialtiesArray[i].name) {
+            $("#doctorInfo").html("<h4 class='sorry'>Choose a proper specialty.</h4>");
+        }
+        if (specialty === specialtiesArray[i].name) {
+            specialty = specialtiesArray[i].uid;
+        }
     }
-    if(specialty === specialtiesArray[i].name){
-        specialty = specialtiesArray[i].uid;
-    }
-}
 
     if (name == "") {
         $("#doctorInfo").html("<h4 class='sorry'>Don't forget to add a doctor's name.</h4>");
@@ -110,10 +111,10 @@ for(var i in specialtiesArray){
 
                     var newRow = $("<div class='row listing'></div><br>");
 
-                    if(doctors[i].profile.middle_name === name){
+                    if (doctors[i].profile.middle_name === name) {
                         var doctorName = $("<p class='docName'>" + doctors[i].profile.first_name + " " + doctors[i].profile.middle_name + " " + doctors[i].profile.last_name + "</p>");
-                    } else{
-                    var doctorName = $("<p class='docName'>" + doctors[i].profile.first_name + " " + doctors[i].profile.last_name + "</p>");
+                    } else {
+                        var doctorName = $("<p class='docName'>" + doctors[i].profile.first_name + " " + doctors[i].profile.last_name + "</p>");
                     }
                     var doctorSpecialties = $("<p>Specialties: </p>");
                     for (var j = 0; j < doctors[i].specialties.length; j++) {
@@ -139,8 +140,10 @@ for(var i in specialtiesArray){
                         var latitude = practices[practices.length - 1].lat;
                         var longitude = practices[practices.length - 1].lon;
                         var locationName = practices[practices.length - 1].name;
-                        //console.log(locationName + " is at latitude: " + latitude + ", longitude: " + longitude);
-                        var mapLink = $("<a class='mapLink' data-name='" + doctors[i].profile.first_name + " " + doctors[i].profile.last_name + "'>Click here for map</a><br>");
+
+                        // create map link
+                        console.log("location: " + locationName + " is at latitude: " + latitude + ", longitude: " + longitude);
+                        var mapLink = $("<a class='mapLink' data-latitude='" + latitude + "' data-longitude='" + longitude + "'data-name='" + doctors[i].profile.first_name + " " + doctors[i].profile.last_name + "' > Click here for map</a > <br>");
 
                         newRow.append(mapLink);
                     };
@@ -174,16 +177,15 @@ $(document.body).on("click", ".mapLink", function () {
     $("#doctorHalf").hide();
     $("#map").show();
     var doctorName = $(this).attr("data-name");
+    var latitude = $(this).attr("data-latitude");
+    var longitude = $(this).attr("data-longitude");
     console.log(doctorName);
     $("#chosenDoctor").text(doctorName);
+    console.log("latitude: " + latitude + "longitude: " + longitude);
+    renderMap(latitude, longitude);
 });
 
 $(document.body).on("click", ".fa-times", function () {
     $("#map").hide();
     $("#doctorHalf").show();
 })
-
-
-
-
-

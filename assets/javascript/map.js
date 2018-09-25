@@ -1,5 +1,5 @@
-function renderMap(myLat, myLng) {
-
+// Map with a marker at the input coordinates and pan/zoom interactivity
+function renderMap(latitude, longitude) {
      // initialize communication with the platform
      var platform = new H.service.Platform({
           app_id: 'devportal-demo-20180625',
@@ -12,30 +12,28 @@ function renderMap(myLat, myLng) {
           ppi: pixelRatio === 1 ? undefined : 320
      });
 
-     // initialize a map - this map is centered over Europe
-     var map = new H.Map(document.getElementById('map'),
+     // initialize a map
+     var map = new H.Map(document.getElementById('localMap'),
           defaultLayers.normal.map, {
                center: {
-                    lat: myLat,
-                    lng: myLng
+                    lat: latitude,
+                    lng: longitude
                },
-               zoom: 15,
+               zoom: 14,
                pixelRatio: pixelRatio
           });
 
-     // make the map interactive
+     // make the map interactive for pan/zoom
      var behavior = new H.mapevents.Behavior(new H.mapevents.MapEvents(map));
 
      // Create the default UI components
      var ui = H.ui.UI.createDefault(map, defaultLayers);
 
-     // Now use the map as required...
+     // add marker
      var locationMarker = new H.map.Marker({
-          lat: myLat,
-          lng: myLng
+          lat: latitude,
+          lng: longitude
      });
      map.addObject(locationMarker);
 }
-
-//  ----- this call is just for testing ----
-renderMap(37.649054, -77.615751);
+//renderMap(37.649054, -77.615751);
