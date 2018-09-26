@@ -69,7 +69,6 @@ $("#submit").on("click", function (event) {
     //places input values into variables
     var name = $("#doctor").val().trim();
     var specialty = $("#specialty").val().trim();
-    var city = $("#city").val().trim();
     var state = $("#state").val().trim();
     var gender = $("#gender").val().trim().toLowerCase();
     var number = $("#numberofRecords").val().trim();
@@ -95,16 +94,16 @@ $("#submit").on("click", function (event) {
 
 
     //because a blank gender parameter won't return anything, these nested if/else statements allows for whether the gender input is blank or not
-    //if the number/limit parameter is blank, it will search 10 by default
+    //if the number/limit parameter is blank, it will search 100 by default
     if (gender == "") {
         if (number == "") {
-            var queryURL = "https://api.betterdoctor.com/2016-03-01/doctors?name=" + name + "&specialty_uid=" + specialty + "&limit=10&user_key=6894a66bcefd4390f03f3273fe0ba2e3";
+            var queryURL = "https://api.betterdoctor.com/2016-03-01/doctors?name=" + name + "&specialty_uid=" + specialty + "&limit=100&user_key=6894a66bcefd4390f03f3273fe0ba2e3";
         } else {
             var queryURL = "https://api.betterdoctor.com/2016-03-01/doctors?name=" + name + "&specialty_uid=" + specialty + "&limit=" + number + "&user_key=6894a66bcefd4390f03f3273fe0ba2e3";
         }
     } else {
         if (number == "") {
-            var queryURL = "https://api.betterdoctor.com/2016-03-01/doctors?name=" + name + "&specialty_uid=" + specialty + "&gender=" + gender + "&limit=10&user_key=6894a66bcefd4390f03f3273fe0ba2e3";
+            var queryURL = "https://api.betterdoctor.com/2016-03-01/doctors?name=" + name + "&specialty_uid=" + specialty + "&gender=" + gender + "&limit=100&user_key=6894a66bcefd4390f03f3273fe0ba2e3";
         } else {
             var queryURL = "https://api.betterdoctor.com/2016-03-01/doctors?name=" + name + "&specialty_uid=" + specialty + "&gender=" + gender + "&limit=" + number + "&user_key=6894a66bcefd4390f03f3273fe0ba2e3";
         }
@@ -125,9 +124,7 @@ $("#submit").on("click", function (event) {
             //loops through array of doctor licenses
             for (var h in doctors[i].licenses) {
 
-
-
-                //if the doctor has a license that matches the value in the state input field
+               //if the doctor has a license that matches the value in the state input field
                 if (doctors[i].licenses[h].state == state) {
                     foundDoctor = true;
                     //when a sorry message is returned, this removes it when other records are actually found
@@ -138,8 +135,6 @@ $("#submit").on("click", function (event) {
                     console.log(doctors[i]);
                     //creates row for displaying data on found doctor
                     var newRow = $("<div class='row listing'></div><br>");
-
-
 
                     //if the name input value is in the doctor's middle name, that middle name is displayed; otherwise it is not
 
