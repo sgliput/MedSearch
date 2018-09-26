@@ -2,10 +2,10 @@ body {
     font-family: 'Noticia Text', serif;
     font-size: 2rem;
     background: #a1bbd1;
+    height: 100%;
 }
 
-h1,
-h3 {
+h1, h3 {
     font-family: 'Comfortaa', cursive;
 }
 
@@ -65,8 +65,7 @@ span.navbg:active {
     margin: 0 auto;
 }
 
-h1,
-.carousel-caption h3 {
+h1, .carousel-caption h3 {
     color: blue;
     text-shadow: -2px 0 white, 0 2px white, 2px 0 white, 0 -2px white;
 }
@@ -88,22 +87,19 @@ section p {
 }
 
 .bottom {
-    background-color: blue;
+    background-color: #2766c4;
     height: 50px;
     width: 100%;
-    position: fixed;
+    position: relative;
     bottom: 0px;
     color: white;
-    font-size: 3rem;
+    font-size: 1.3rem;
     z-index: 2;
 }
 
-.icons {
+.footerText {
     text-align: center;
-}
-
-.fab {
-    padding: 10px 10px 0px 10px;
+    line-height: 10px;
 }
 
 .searchRow {
@@ -118,9 +114,7 @@ section p {
     display: block;
 }
 
-label,
-input,
-select {
+label, input, select {
     padding: 0 5%;
     width: 100%;
 }
@@ -166,6 +160,7 @@ input, #gender, textarea{
     cursor: pointer;
 }
 
+/*styles for specialty dropdown widget*/ 
 .ui-autocomplete {
     background-color: #a1bbd1;
     color: white;
@@ -185,6 +180,72 @@ ul li:first-child div {
 .ui-menu-item-wrapper:hover {
     font-style: italic;
 }
+
+
+/*styles for input validation modals*/
+
+#searchModal {font-family: Arial, Helvetica, sans-serif;}
+
+/* Center the image and position the close button */
+#searchModal .imgcontainer {
+    text-align: center;
+    margin: 24px 0 12px 0;
+    position: relative;
+}
+
+#searchModal .avatar {
+    width: 60%;
+    border-radius: 50%;
+}
+
+#searchModal .container {
+    padding: 16px;
+}
+
+/* Modal Content/Box */
+#searchModal .modal-content {
+    background-color: #fefefe;
+    margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
+    border: 1px solid #888;
+    width: 40%; /* Could be more or less, depending on screen size */
+}
+
+/* The Close Button (x) */
+#searchModal .close {
+    position: absolute;
+    right: 25px;
+    top: 0;
+    color: #000;
+    font-size: 35px;
+    font-weight: bold;
+}
+
+#searchModal .close:hover,
+#searchModal .close:focus {
+    color: red;
+    cursor: pointer;
+}
+
+/* Add Zoom Animation */
+#searchModal .animate {
+    -webkit-animation: animatezoom 0.6s;
+    animation: animatezoom 0.6s
+}
+
+@-webkit-keyframes animatezoom {
+    from {-webkit-transform: scale(0)} 
+    to {-webkit-transform: scale(1)}
+}
+    
+@keyframes animatezoom {
+    from {transform: scale(0)} 
+    to {transform: scale(1)}
+}
+
+
+
+
+
 
 
 @media(max-width: 795px) {
@@ -210,13 +271,10 @@ ul li:first-child div {
     }
 
     .bottom {
-        height: 40px;
-        font-size: 2.5rem;
+        height: 45px;
+        font-size: 1.4rem;
     }
 
-    .fab {
-        padding: 0px 10px 0px 10px;
-    }
 }
 
 @media(max-width: 588px) {
