@@ -63,14 +63,16 @@ $("#submit").on("click", function (event) {
 
     //empties right side of screen of past results
     $("#doctorInfo").empty();
+    $("#doctorHalf").show();
+    $("#map").hide();
 
     //places input values into variables
     var name = $("#doctor").val().trim();
     var specialty = $("#specialty").val().trim();
-    var city = $("#city").val().trim();
     var state = $("#state").val().trim();
     var gender = $("#gender").val().trim().toLowerCase();
     var number = $("#numberofRecords").val().trim();
+    var collapseNumber = 1;
 
 
     //loops through specialtiesArray
@@ -92,16 +94,16 @@ $("#submit").on("click", function (event) {
 
 
     //because a blank gender parameter won't return anything, these nested if/else statements allows for whether the gender input is blank or not
-    //if the number/limit parameter is blank, it will search 10 by default
+    //if the number/limit parameter is blank, it will search 100 by default
     if (gender == "") {
         if (number == "") {
-            var queryURL = "https://api.betterdoctor.com/2016-03-01/doctors?name=" + name + "&specialty_uid=" + specialty + "&limit=10&user_key=6894a66bcefd4390f03f3273fe0ba2e3";
+            var queryURL = "https://api.betterdoctor.com/2016-03-01/doctors?name=" + name + "&specialty_uid=" + specialty + "&limit=100&user_key=6894a66bcefd4390f03f3273fe0ba2e3";
         } else {
             var queryURL = "https://api.betterdoctor.com/2016-03-01/doctors?name=" + name + "&specialty_uid=" + specialty + "&limit=" + number + "&user_key=6894a66bcefd4390f03f3273fe0ba2e3";
         }
     } else {
         if (number == "") {
-            var queryURL = "https://api.betterdoctor.com/2016-03-01/doctors?name=" + name + "&specialty_uid=" + specialty + "&gender=" + gender + "&limit=10&user_key=6894a66bcefd4390f03f3273fe0ba2e3";
+            var queryURL = "https://api.betterdoctor.com/2016-03-01/doctors?name=" + name + "&specialty_uid=" + specialty + "&gender=" + gender + "&limit=100&user_key=6894a66bcefd4390f03f3273fe0ba2e3";
         } else {
             var queryURL = "https://api.betterdoctor.com/2016-03-01/doctors?name=" + name + "&specialty_uid=" + specialty + "&gender=" + gender + "&limit=" + number + "&user_key=6894a66bcefd4390f03f3273fe0ba2e3";
         }
@@ -122,9 +124,7 @@ $("#submit").on("click", function (event) {
             //loops through array of doctor licenses
             for (var h in doctors[i].licenses) {
 
-
-
-                //if the doctor has a license that matches the value in the state input field
+               //if the doctor has a license that matches the value in the state input field
                 if (doctors[i].licenses[h].state == state) {
                     foundDoctor = true;
                     //when a sorry message is returned, this removes it when other records are actually found
@@ -135,8 +135,6 @@ $("#submit").on("click", function (event) {
                     console.log(doctors[i]);
                     //creates row for displaying data on found doctor
                     var newRow = $("<div class='row listing'></div><br>");
-
-
 
                     //if the name input value is in the doctor's middle name, that middle name is displayed; otherwise it is not
 
@@ -156,21 +154,43 @@ $("#submit").on("click", function (event) {
                         }
                     }
 
+                    //array for collecting state licenses
+                    var licenseArray = [];
                     //creates paragraph for listing the states the doctor is licensed in
                     var licenses = $("<p><b>Licensed in:</b> </p>");
+
+                    //pushes license states into licenseArray and ensures that there are no repeated values
                     for (var m = 0; m < doctors[i].licenses.length; m++) {
-                        if (m === doctors[i].licenses.length - 1) {
-                            licenses.append(doctors[i].licenses[m].state);
+                        if ($.inArray(doctors[i].licenses[m].state, licenseArray) === -1) {
+                            licenseArray.push(doctors[i].licenses[m].state);
+                        }
+                    }
+
+                    //loops through licenseArray and adds comma-separated list of licenses to license paragraph
+                    for(var n = 0; n < licenseArray.length; n++){
+                        if (n === licenseArray.length - 1) {
+                            licenses.append(licenseArray[n]);
                         } else {
-                            licenses.append(doctors[i].licenses[m].state + ", ");
+                            licenses.append(licenseArray[n] + ", ");
                         }
                     }
 
                     //array for collecting insurances accepted by doctor
                     var insuranceArray = [];
-                    //if there are insurances listed, this creates a paragraph for listing them
+                    //if there are insurances listed, this creates a collapsible panel for listing them
                     if (doctors[i].insurances.length !== 0) {
-                        var insurance = $("<p><b>Insurances accepted:</b> </p>");
+                        var insurance = $(`<div class="panel panel-default">
+                        <div class="panel-heading">
+                          <p class="panel-title">
+                            <a data-toggle="collapse" href="#collapse${collapseNumber}"><b>Insurances accepted:</b></a>
+                          </p>
+                        </div>`);
+                        
+                        var insuranceDiv = $(`<div id="collapse${collapseNumber}" class="panel-collapse collapse"></div>`);
+                        var insuranceList = $("<ul class='list-group'>");
+                        insuranceDiv.append(insuranceList);
+                        insurance.append(insuranceDiv);
+                        
                         //pushes insurance names into insuranceArray and ensures that there are no repeated values
                         for (var k = 0; k < doctors[i].insurances.length; k++) {
                             if ($.inArray(doctors[i].insurances[k].insurance_provider.name, insuranceArray) === -1) {
@@ -178,14 +198,12 @@ $("#submit").on("click", function (event) {
                             }
                         }
 
-                        //loops through insuranceArray and adds comma-separated list of insurances to insurance paragraph
+                        //loops through insuranceArray and adds a list item for each insurance to the collapsible panel's ul (insuranceList)
                         for (var l = 0; l < insuranceArray.length; l++) {
-                            if (l === insuranceArray.length - 1) {
-                                insurance.append(insuranceArray[l]);
-                            } else {
-                                insurance.append(insuranceArray[l] + ", ");
-                            }
+                                insuranceList.append(`<li class="list-group-item">${insuranceArray[l]}</li>`);
                         }
+                        //the collapseNumber increasing for each collapsible panel ensures that each one opens independently
+                        collapseNumber++;
                     }
 
                     //if the practices array is not empty
