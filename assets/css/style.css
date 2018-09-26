@@ -2,10 +2,10 @@ body {
     font-family: 'Noticia Text', serif;
     font-size: 2rem;
     background: #a1bbd1;
+    height: 100%;
 }
 
-h1,
-h3 {
+h1, h3 {
     font-family: 'Comfortaa', cursive;
 }
 
@@ -65,8 +65,7 @@ span.navbg:active {
     margin: 0 auto;
 }
 
-h1,
-.carousel-caption h3 {
+h1, .carousel-caption h3 {
     color: blue;
     text-shadow: -2px 0 white, 0 2px white, 2px 0 white, 0 -2px white;
 }
@@ -88,10 +87,10 @@ section p {
 }
 
 .bottom {
-    background-color: blue;
+    background-color: #2766c4;
     height: 50px;
     width: 100%;
-    position: fixed;
+    position: relative;
     bottom: 0px;
     color: white;
     font-size: 1.3rem;
@@ -188,23 +187,23 @@ ul li:first-child div {
 #searchModal {font-family: Arial, Helvetica, sans-serif;}
 
 /* Center the image and position the close button */
-.imgcontainer {
+#searchModal .imgcontainer {
     text-align: center;
     margin: 24px 0 12px 0;
     position: relative;
 }
 
-img.avatar {
+#searchModal .avatar {
     width: 60%;
     border-radius: 50%;
 }
 
-.container {
+#searchModal .container {
     padding: 16px;
 }
 
 /* Modal Content/Box */
-.modal-content {
+#searchModal .modal-content {
     background-color: #fefefe;
     margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
     border: 1px solid #888;
@@ -212,7 +211,7 @@ img.avatar {
 }
 
 /* The Close Button (x) */
-.close {
+#searchModal .close {
     position: absolute;
     right: 25px;
     top: 0;
@@ -221,14 +220,14 @@ img.avatar {
     font-weight: bold;
 }
 
-.close:hover,
-.close:focus {
+#searchModal .close:hover,
+#searchModal .close:focus {
     color: red;
     cursor: pointer;
 }
 
 /* Add Zoom Animation */
-.animate {
+#searchModal .animate {
     -webkit-animation: animatezoom 0.6s;
     animation: animatezoom 0.6s
 }
