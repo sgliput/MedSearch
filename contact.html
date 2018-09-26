@@ -15,7 +15,14 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
         crossorigin="anonymous">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/5.5.0/firebase.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.5.1/firebase.js"></script>
+
+    <!-- Firebase App is always required and must be first -->
+    <script src="https://www.gstatic.com/firebasejs/5.4.1/firebase-app.js"></script>
+
+    <!-- Add additional services that you want to use -->
+    <script src="https://www.gstatic.com/firebasejs/5.4.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.4.1/firebase-database.js"></script>
 
     <!--Additional Bootstrap style and scripts I've used before-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -224,7 +231,7 @@ span.psw {
 
         <div id="id01" class="modal">
 
-            <form class="modal-content animate" action="/action_page.php">
+            <form class="modal-content animate">
                 <div class="imgcontainer">
                     <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
                     <img src="assets/images/login-512.png" alt="Avatar" class="avatar">
@@ -232,12 +239,12 @@ span.psw {
 
                 <div class="container">
 
-                    <input type="text" id="uname" placeholder="Enter Username" name="uname" required>
+                    <input type="text" class="uemail" placeholder="Enter Email" name="uemail" id="uemail" required>
 
                     <br>
-                    <input type="password" placeholder="Enter Password" name="psw" required>
+                    <input type="password" placeholder="Enter Password" name="psw" id="psw" required>
                     <br>
-                    <button type="submit">Login</button>
+                    <button type="submit" id="login">Login</button>
 
                 </div>
 
@@ -257,21 +264,28 @@ span.psw {
             }
         </script>
 
+
+
         <!-------------------------------------------------------------------------------------------------->
         <!-------------------------------------------------------------------------------------------------->
 
+
+
+
     </div>
-    
+
     <footer class="bottom">
-        <div class="footerText">
-            <br>
-            <i class="far fa-copyright"></i>&nbsp;2018<br>
-            Designed by Sam Liput, Dimitre Hristov, and Sherrie McNulty
+        <div class="icons">
+            <i class="fab fa-facebook"></i>
+            <i class="fab fa-twitter"></i>
             <br>
         </div>
     </footer>
 
     <script src="assets/javascript/contact.js"></script>
+
+    <br><br><br><br>
+
 
 
 </body>
