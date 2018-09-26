@@ -1,3 +1,17 @@
+// Get the modal
+var modal = $("#searchModal");
+
+// When the user clicks anywhere outside of the modal, it closes
+window.onclick = function (event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+//When the user clicks on the X in the modal, it closes
+$(".close").on("click", function () {
+    $("#searchModal").modal("hide");
+})
+
 
 //URL and AJAX call to return a list of specialties from Better Doctor API
 var queryURLSpecialties = "https://api.betterdoctor.com/2016-03-01/specialties?user_key=6894a66bcefd4390f03f3273fe0ba2e3";
@@ -73,23 +87,32 @@ $("#submit").on("click", function (event) {
     var gender = $("#gender").val().trim().toLowerCase();
     var number = $("#numberofRecords").val().trim();
     var collapseNumber = 1;
+    var foundSpecialty = false;
 
 
     //loops through specialtiesArray
     for (var i in specialtiesArray) {
-        //validation message if specialty is not blank and if the value is not in the specialtiesArray
-        if (specialty !== specialtiesArray[i].name && specialty !== "") {
-            $("#doctorInfo").html("<h4 class='sorry'>Choose a proper specialty.</h4>");
-        }
+
         //if the value is in the specialtiesArray, the value is switched out for its corresponding uid to insert into the queryURL
-        else if (specialty === specialtiesArray[i].name) {
+        if (specialty === specialtiesArray[i].name) {
+            foundSpecialty = true;
+            $("#searchModal").modal("hide");
             specialty = specialtiesArray[i].uid;
         }
     }
 
+    //validation message if specialty is not blank and if the value is not in the specialtiesArray
+    if (!foundSpecialty && specialty !== "") {
+        $('#searchModal').modal('show');
+        $("#searchModalP").text("Choose a proper specialty or leave it blank.");
+        $(".avatar").attr("src", "assets/images/finger-wagging.jpg");
+    }
+
     //because a name value is required for API call, a validation message appears if the name input is left blank
     if (name == "") {
-        $("#doctorInfo").html("<h4 class='sorry'>Don't forget to add a doctor's name.</h4>");
+        $('#searchModal').modal('show');
+        $("#searchModalP").text("Don't forget to add a doctor's name.");
+        $(".avatar").attr("src", "assets/images/docshrug.jpg");
     }
 
 
@@ -124,7 +147,7 @@ $("#submit").on("click", function (event) {
             //loops through array of doctor licenses
             for (var h in doctors[i].licenses) {
 
-               //if the doctor has a license that matches the value in the state input field
+                //if the doctor has a license that matches the value in the state input field
                 if (doctors[i].licenses[h].state == state) {
                     foundDoctor = true;
                     //when a sorry message is returned, this removes it when other records are actually found
@@ -161,13 +184,15 @@ $("#submit").on("click", function (event) {
 
                     //pushes license states into licenseArray and ensures that there are no repeated values
                     for (var m = 0; m < doctors[i].licenses.length; m++) {
-                        if ($.inArray(doctors[i].licenses[m].state, licenseArray) === -1) {
-                            licenseArray.push(doctors[i].licenses[m].state);
+                        if (doctors[i].licenses[m].state) {
+                            if ($.inArray(doctors[i].licenses[m].state, licenseArray) === -1) {
+                                licenseArray.push(doctors[i].licenses[m].state);
+                            }
                         }
                     }
 
                     //loops through licenseArray and adds comma-separated list of licenses to license paragraph
-                    for(var n = 0; n < licenseArray.length; n++){
+                    for (var n = 0; n < licenseArray.length; n++) {
                         if (n === licenseArray.length - 1) {
                             licenses.append(licenseArray[n]);
                         } else {
@@ -185,12 +210,12 @@ $("#submit").on("click", function (event) {
                             <a data-toggle="collapse" href="#collapse${collapseNumber}"><b>Insurances accepted:</b></a>
                           </p>
                         </div>`);
-                        
+
                         var insuranceDiv = $(`<div id="collapse${collapseNumber}" class="panel-collapse collapse"></div>`);
                         var insuranceList = $("<ul class='list-group'>");
                         insuranceDiv.append(insuranceList);
                         insurance.append(insuranceDiv);
-                        
+
                         //pushes insurance names into insuranceArray and ensures that there are no repeated values
                         for (var k = 0; k < doctors[i].insurances.length; k++) {
                             if ($.inArray(doctors[i].insurances[k].insurance_provider.name, insuranceArray) === -1) {
@@ -200,7 +225,7 @@ $("#submit").on("click", function (event) {
 
                         //loops through insuranceArray and adds a list item for each insurance to the collapsible panel's ul (insuranceList)
                         for (var l = 0; l < insuranceArray.length; l++) {
-                                insuranceList.append(`<li class="list-group-item">${insuranceArray[l]}</li>`);
+                            insuranceList.append(`<li class="list-group-item">${insuranceArray[l]}</li>`);
                         }
                         //the collapseNumber increasing for each collapsible panel ensures that each one opens independently
                         collapseNumber++;
@@ -226,6 +251,14 @@ $("#submit").on("click", function (event) {
                         var latitude = practices[practices.length - 1].lat;
                         var longitude = practices[practices.length - 1].lon;
                         var locationName = practices[practices.length - 1].name;
+
+                        if (practices[practices.length - 1].visit_address.street2) {
+                            var address = practices[practices.length - 1].visit_address.street + ", " + practices[practices.length - 1].visit_address.street2;
+                        } else {
+                            var address = practices[practices.length - 1].visit_address.street;
+                        }
+
+                        var zip = practices[practices.length - 1].visit_address.zip;
                         console.log(locationName + " is at latitude: " + latitude + ", longitude: " + longitude);
 
                         //variable and string literal for displaying name, city, and state of doctor's practice
@@ -234,15 +267,15 @@ $("#submit").on("click", function (event) {
 
                         // creates clickable map link for toggling to map
                         console.log("location: " + locationName + " is at latitude: " + latitude + ", longitude: " + longitude);
-                        var mapLink = $("<a class='mapLink' data-latitude='" + latitude + "' data-longitude='" + longitude + "' data-name='" + doctors[i].profile.first_name + " " + doctors[i].profile.last_name + "' > Click here for map</a > <br>");
+                        var mapLink = $(`<a class='mapLink' data-latitude="${latitude}" data-longitude="${longitude}" data-name="${doctors[i].profile.first_name + " " + doctors[i].profile.last_name}" data-address="${address}" data-cityState="${cityAndState}" data-zip="${zip}"><p><b>Click here for map</b></p></a> <br>`);
 
 
                         newRow.append(mapLink);
 
-                        
+
                     };
 
-                    
+
 
                     //adds phone, specialties, and name to doctor row, and adds row to doctorInfo area
                     doctorName.append(phone);
@@ -252,8 +285,8 @@ $("#submit").on("click", function (event) {
                     doctorName.append(insurance);
 
                     //if no map and phone number are returned (identifying information), then a link for a Google search is inserted, which will open in another window
-                    if(!mapLink && !phone){
-                        var searchLink = $("<p>Not much info? <a href='https://www.google.com/search?q=dr.+" + doctors[i].profile.first_name + "+" + doctors[i].profile.last_name + "&oq=dr.+" + doctors[i].profile.first_name + "+" + doctors[i].profile.last_name + "' target='blank'>Click here to search Google.</a>");
+                    if (!mapLink && !phone) {
+                        var searchLink = $("<p>Not much info? <a href='https://www.google.com/search?q=dr.+" + doctors[i].profile.first_name + "+" + doctors[i].profile.last_name + "+" + state + "&oq=dr.+" + doctors[i].profile.first_name + "+" + doctors[i].profile.last_name + "+" + state + "' target='blank'>Click here to search Google.</a>");
                         doctorName.append(searchLink);
                     }
 
@@ -266,9 +299,6 @@ $("#submit").on("click", function (event) {
                     $("#doctorInfo").html("<h4 class='sorry'>Sorry, there are no doctors in that state that fit your criteria.</h4>");
 
                 }
-
-                //var source = response.data[i].profile.image_url;
-                //$("img").attr("src", source);
             }
         }
 
@@ -289,8 +319,15 @@ $(document.body).on("click", ".mapLink", function () {
     var doctorName = $(this).attr("data-name");
     var latitude = $(this).attr("data-latitude");
     var longitude = $(this).attr("data-longitude");
+    var address = $(this).attr("data-address");
+
+    var cityAndState = $(this).attr("data-cityState");
+    var zip = $(this).attr("data-zip");
     console.log(doctorName);
     $("#chosenDoctor").text(doctorName);
+
+    $("#doctorHeader").append(`<p class="addressP">${address}<br>${cityAndState} ${zip}`);
+
     console.log("latitude: " + latitude + ", longitude: " + longitude);
     renderMap(latitude, longitude);
 });
@@ -298,5 +335,6 @@ $(document.body).on("click", ".mapLink", function () {
 //when X is clicked above map, it toggles back to doctor results
 $(document.body).on("click", ".fa-times", function () {
     $("#map").hide();
+    $(".addressP").remove();
     $("#doctorHalf").show();
 })
