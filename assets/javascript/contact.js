@@ -1,14 +1,47 @@
-// init config variables for firebase
+
+// Initialize Firebase
 var config = {
+    apiKey: "AIzaSyDn44NsY3peqVxfFN2JuO1lKRiWxMzbA9w",
     authDomain: "medsearch-7d20f.firebaseapp.com",
-    databaseURL: "https://medsearch-7d20f.firebaseio.com/",
+    databaseURL: "https://medsearch-7d20f.firebaseio.com",
     projectId: "medsearch-7d20f",
+    storageBucket: "medsearch-7d20f.appspot.com",
+    messagingSenderId: "839977621447"
 };
+
 
 //init firebase, get dataRef var for contact database
 firebase.initializeApp(config);
 
 var dataRef = firebase.database();
+
+firebase.auth().signOut();
+
+$("#login").on("click", function (event) {
+    event.preventDefault();
+
+    var uemail = $("#uemail").val().trim();
+    var pword = $("#psw").val().trim();
+    console.log(uemail + " " + pword);
+
+    firebase.auth().signInWithEmailAndPassword(uemail, pword).catch(function (error) {
+        // Handle Errors here.
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        // ...
+    });
+
+    var user = firebase.auth().currentUser;
+
+    if (user) {
+        console.log("user is signed in")
+        window.location.href = "admincontact.html";
+    } else {
+        console.log("user is not signed in");
+    }
+
+
+});
 
 // When 'submit' is clicked...
 $("#submit").on("click", function (event) {
