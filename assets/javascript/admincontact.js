@@ -1,5 +1,7 @@
 $(document).ready(function () {
 
+    $("#notsignedin").hide();
+
     var config = {
         apiKey: "AIzaSyDn44NsY3peqVxfFN2JuO1lKRiWxMzbA9w",
         authDomain: "medsearch-7d20f.firebaseapp.com",
@@ -13,42 +15,76 @@ $(document).ready(function () {
 
     var dataRef = firebase.database().ref();
 
-    dataRef.on("child_added", function (snapshot) {
-        console.log(snapshot.val());
+    var user = firebase.auth().currentUser;
 
-        child = snapshot.val();
-        var id = snapshot.key;
-        console.log(id);
+    console.log(user);
 
-        console.log(child.name);
+    firebase.auth().onAuthStateChanged(function (user) {
+        if (user) {
+            $("#notsignedin").hide();
+            $("#displayData").show();
 
-        var nametd = $("<td id='nametd'>" + child.name + "</td>");
-        var emailtd = $("<td id='emailtd'>" + child.email + "</td>");
-        var commenttd = $("<td id='commenttd'>" + child.comment + "</td>");
+            dataRef.on("child_added", function (snapshot) {
+                // console.log(snapshot.val());
 
-        var dataRowDisp = $("<tr>");
-        dataRowDisp.append(nametd);
-        dataRowDisp.append(emailtd);
-        dataRowDisp.append(commenttd);
+                child = snapshot.val();
+                var id = snapshot.key;
+                // console.log(id);
 
-        $("#dataDisp").append(dataRowDisp);
+                // console.log(child.name);
+
+                var nametd = $("<td id='nametd'>" + child.name + "</td>");
+                var emailtd = $("<td id='emailtd'>" + child.email + "</td>");
+                var commenttd = $("<td id='commenttd'>" + child.comment + "</td>");
+
+                var dataRowDisp = $("<tr>");
+                dataRowDisp.append(nametd);
+                dataRowDisp.append(emailtd);
+                dataRowDisp.append(commenttd);
+
+                $("#dataDisp").append(dataRowDisp);
 
 
-        // snapshot.forEach(function(childSnapshot) {
-        //     var key = childSnapshot.key;
-        //     var childData = childSnapshot.val();
+            }, function (error) {
+                console.log("Error: " + error.code);
+            });
+        } else {
+            console.log("user is not signed in");
+            $("#displayData").hide();
+            $("#notsignedin").show();
+        }
 
-        //     console.log(key);
-        //     console.log(childData);
 
-        //     $("#nameVal").append(childData);
+        // dataRef.on("child_added", function (snapshot) {
+        //     // console.log(snapshot.val());
 
+        //     child = snapshot.val();
+        //     var id = snapshot.key;
+        //     // console.log(id);
+
+        //     // console.log(child.name);
+
+        //     var nametd = $("<td id='nametd'>" + child.name + "</td>");
+        //     var emailtd = $("<td id='emailtd'>" + child.email + "</td>");
+        //     var commenttd = $("<td id='commenttd'>" + child.comment + "</td>");
+
+        //     var dataRowDisp = $("<tr>");
+        //     dataRowDisp.append(nametd);
+        //     dataRowDisp.append(emailtd);
+        //     dataRowDisp.append(commenttd);
+
+        //     $("#dataDisp").append(dataRowDisp);
+
+
+        // }, function (error) {
+        //     console.log("Error: " + error.code);
         // });
 
-    }, function (error) {
-        console.log("Error: " + error.code);
+        $("#signout").on("click", function (event) {
+            firebase.auth().signOut();
+            console.log("signout");
+            window.location.href = "contact.html";
+        });
+
     });
-
-
 });
-
