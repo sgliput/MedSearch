@@ -159,11 +159,18 @@ input, #gender, textarea{
     cursor: pointer;
 }
 
-#adminbtn, #signout{
+#adminbtn {
     margin: 10px;
     position: relative;
     left: 25px;
     bottom: 20px;
+}
+
+#signout{
+    margin: 10px;
+    position: relative;
+    left: 25px;
+    bottom: 10px;
 }
 
 
