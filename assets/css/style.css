@@ -177,6 +177,10 @@ ul li:first-child div {
     border-top: none;
 }
 
+.ui-helper-hidden-accessible div:last-child{
+    display: none !important;
+}
+
 .ui-menu-item-wrapper:hover {
     font-style: italic;
 }
