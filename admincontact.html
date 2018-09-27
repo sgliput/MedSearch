@@ -17,6 +17,13 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/5.5.0/firebase.js"></script>
 
+    <!-- Firebase App is always required and must be first -->
+    <script src="https://www.gstatic.com/firebasejs/5.4.1/firebase-app.js"></script>
+
+    <!-- Add additional services that you want to use -->
+    <script src="https://www.gstatic.com/firebasejs/5.4.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.4.1/firebase-database.js"></script>
+
     <!--Additional Bootstrap style and scripts I've used before-->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -64,16 +71,21 @@
             <div class="col-md-12 col-sm-12">
                 <div class="card inputCard">
                     <div class="card-header">
-                        Contact Us
+                        User Comments
                     </div>
                     <div class="card-body" id="display">
-                        <table id="displayData">
-                            <tr>
-                              <td>Name</td>
-                              <td>email</td>
-                              <td>Comment</td>
-                            </tr>
-                          </table>
+                        <table id="displayData" class="table">
+                            <thead>
+                                <tr>
+                                    <td>Name</td>
+                                    <td>email</td>
+                                    <td>Comment</td>
+                                </tr>
+                            </thead>
+                            <tbody id="dataDisp" class=".thead-light">
+
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
