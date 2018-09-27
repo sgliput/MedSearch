@@ -35,7 +35,7 @@ $(document).ready(function () {
                 // console.log(child.name);
 
                 var nametd = $("<td id='nametd'>" + child.name + "</td>");
-                var emailtd = $("<td id='emailtd'>" + child.email + "</td>");
+                var emailtd = $("<td id='emailtd'>" + "<a href='mailto:" + child.email + "'>" + child.email + "</a>" + "</td>");
                 var commenttd = $("<td id='commenttd'>" + child.comment + "</td>");
 
                 var dataRowDisp = $("<tr>");
