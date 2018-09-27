@@ -159,6 +159,14 @@ input, #gender, textarea{
     cursor: pointer;
 }
 
+#adminbtn, #signout{
+    margin: 10px;
+    position: relative;
+    left: 25px;
+    bottom: 20px;
+}
+
+
 /*styles for specialty dropdown widget*/ 
 .ui-autocomplete {
     background-color: #a1bbd1;
