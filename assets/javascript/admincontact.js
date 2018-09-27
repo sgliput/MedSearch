@@ -23,6 +23,7 @@ $(document).ready(function () {
         if (user) {
             $("#notsignedin").hide();
             $("#displayData").show();
+            $("#signout").show();
 
             dataRef.on("child_added", function (snapshot) {
                 // console.log(snapshot.val());
@@ -52,6 +53,7 @@ $(document).ready(function () {
             console.log("user is not signed in");
             $("#displayData").hide();
             $("#notsignedin").show();
+            $("#signout").hide();
         }
 
 
