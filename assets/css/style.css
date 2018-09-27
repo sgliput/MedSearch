@@ -80,10 +80,9 @@ section p {
 }
 
 .aside {
-    height: 100%;
-    width: 100%;
-    background-color: grey;
-    background: url("../images/map.jpg");
+    height: 225px;
+    width: 350px;
+    padding: 0 15px;
 }
 
 .bottom {
@@ -175,6 +174,10 @@ input, #gender, textarea{
 
 ul li:first-child div {
     border-top: none;
+}
+
+.ui-helper-hidden-accessible div:last-child{
+    display: none !important;
 }
 
 .ui-menu-item-wrapper:hover {
@@ -332,4 +335,12 @@ ul li:first-child div {
     .nav-link {
         padding-left: 10%;
     }
+}
+
+@media(max-width: 768px) {
+.aside {
+    height: 325px;
+    width: 450px;
+    padding: 0 50px;
+}
 }
