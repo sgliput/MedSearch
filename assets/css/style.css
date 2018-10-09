@@ -105,7 +105,7 @@ section p {
     background-color: white;
 }
 
-.inputCard {
+.inputCard, .commentCard {
     margin: 5%;
 }
 
@@ -170,6 +170,7 @@ input, #gender, textarea{
     margin: 10px;
     position: relative;
     left: 25px;
+    margin-top: 30px;
     bottom: 10px;
 }
 

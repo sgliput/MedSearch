@@ -37,11 +37,14 @@ $(document).ready(function () {
                 var nametd = $("<td id='nametd'>" + child.name + "</td>");
                 var emailtd = $("<td id='emailtd'>" + "<a href='mailto:" + child.email + "'>" + child.email + "</a>" + "</td>");
                 var commenttd = $("<td id='commenttd'>" + child.comment + "</td>");
+                var deleteRecord = $("<td>");
+    deleteRecord.html("<button class='delete btn-danger' data-name='" + id + "'>Delete</button>");
 
                 var dataRowDisp = $("<tr>");
                 dataRowDisp.append(nametd);
                 dataRowDisp.append(emailtd);
                 dataRowDisp.append(commenttd);
+                dataRowDisp.append(deleteRecord);
 
                 $("#dataDisp").append(dataRowDisp);
 
@@ -55,6 +58,18 @@ $(document).ready(function () {
             $("#notsignedin").show();
             $("#signout").hide();
         }
+
+        $(document.body).on("click", ".delete", function () {
+            var id = $(this).attr("data-name");
+            var deleteThis = dataRef.child(id);
+            deleteThis.remove().then(function () {
+                alert("You deleted a comment.");
+                location.reload();
+            }).catch(function (error) {
+                alert("Sorry, something went wrong");
+                console.log("Sorry");
+            });
+        })
 
 
         // dataRef.on("child_added", function (snapshot) {
