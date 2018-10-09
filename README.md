@@ -1,5 +1,9 @@
 # MedSearch
 
+## Deployed Project
+
+https://sgliput.github.io/MedSearch/
+
 ## Home (Index) Page
 
 The home page features an introduction to the MedSearch website and its purpose of connecting users with doctors. The navigation list and the Bootstrap carousel both contain links to the three main pages (index, search, and contact.html). A map image in the bottom right links to a map screen.
@@ -16,3 +20,6 @@ An alert will also trigger if no name value is given for the search. If no recor
 
 ## Contact Page
 
+The Contact page consists of a form for typing in a name, e-mail, and comment. Input validation messages ensure that the field are filled properly, and when they are, clicking the submit button submits the information to a Firebase database, hides the form, and shows a thank you message.
+
+Clicking the Admin Login button triggers a modal form for an e-mail and password, also with input validation using a regular expression for the e-mail. The login credentials are test@test.com for the e-mail and aaaaaa for the password. Logging in with those credentials accesses a page secured with Firebase authentication that displays the past submitted contact information in a table. Each row has a Delete button to the right that will delete the row and the corresponding contact info from the Firebase database. Clicking the Sign Out button returns to the normal Contact page. 
